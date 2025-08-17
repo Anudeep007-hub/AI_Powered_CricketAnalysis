@@ -1,7 +1,8 @@
 import streamlit as st
 import os
 import tempfile
-from  analysis_module import analyze_video # Import the refactored analysis function
+import cv2  # For getting video resolution
+from analysis_module import analyze_video  # Import the refactored analysis function
 
 st.set_page_config(page_title="Cricket Shot Analyzer", layout="wide")
 
@@ -13,25 +14,30 @@ uploaded_file = st.file_uploader("Choose a video file...", type=["mp4", "mov", "
 run_bonus = st.checkbox("Enable Advanced Bonus Analysis (Slower)", value=True)
 
 if uploaded_file is not None:
-    # Create a temporary file to save the uploaded video
+    # Save uploaded file as a temp file
     with tempfile.NamedTemporaryFile(delete=False, suffix='.mp4') as tfile:
         tfile.write(uploaded_file.read())
         video_path = tfile.name
 
-    st.video(video_path)
+    # --- Get video resolution dynamically ---
+    cap = cv2.VideoCapture(video_path)
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    cap.release()
+
+    st.write(f"**Video Resolution:** {width} × {height}")
+    st.video(video_path)  # Streamlit auto-preserves aspect ratio
 
     if st.button("Analyze Shot", type="primary"):
         with st.spinner("Analyzing video... This may take a few moments. Please wait."):
             try:
-                # Run the analysis function
+                # Run analysis
                 results = analyze_video(video_path, run_bonus_features=run_bonus)
-                
                 st.success("Analysis Complete!")
 
-                # --- Display Results ---
+                # --- Results ---
                 st.header("Results")
-                
-                # Display HTML report if available
+
                 if run_bonus and os.path.exists(results.get('html_report_path', '')):
                     st.subheader("Analysis Report")
                     with open(results['html_report_path'], 'r', encoding='utf-8') as f:
@@ -43,23 +49,25 @@ if uploaded_file is not None:
                             file_name="analysis_report.html",
                             mime="text/html"
                         )
-                else: # Fallback to basic display
+                else:
                     st.subheader("Evaluation Report")
                     if results.get('evaluation_data'):
                         eval_data = results['evaluation_data']
                         if 'Overall Grade' in eval_data:
                             grade_info = eval_data.pop('Overall Grade')
-                            st.metric(label="Overall Grade", value=grade_info['grade'], delta=f"Avg Score: {grade_info['average_score']}")
+                            st.metric(
+                                label="Overall Grade",
+                                value=grade_info['grade'],
+                                delta=f"Avg Score: {grade_info['average_score']}"
+                            )
                         for category, details in eval_data.items():
                             st.metric(label=category, value=f"{details['score']}/10")
                             st.caption(details['feedback'])
-                
+
                 st.subheader("Annotated Video")
                 if os.path.exists(results['video_path']):
-                    video_file = open(results['video_path'], 'rb')
-                    video_bytes = video_file.read()
-                    st.video(video_bytes)
-                    with open(results['video_path'], "rb") as file:
+                    with open(results['video_path'], 'rb') as file:
+                        st.video(file.read())  # Dynamic display
                         st.download_button(
                             label="Download Annotated Video",
                             data=file,
@@ -72,6 +80,5 @@ if uploaded_file is not None:
             except Exception as e:
                 st.error(f"An error occurred during analysis: {e}")
             finally:
-                # Clean up the temporary file
                 if os.path.exists(video_path):
                     os.remove(video_path)
