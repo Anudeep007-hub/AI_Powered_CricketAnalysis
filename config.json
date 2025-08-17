@@ -1,0 +1,20 @@
+{
+  "feedback_thresholds": {
+    "good_elbow_angle": 160,
+    "head_alignment_ratio": 0.5
+  },
+  "reference_drive": {
+    "impact_metrics": {
+      "front_elbow_angle": {
+        "min": 165,
+        "max": 180,
+        "weight": 0.4
+      },
+      "spine_lean": {
+        "min": 10,
+        "max": 25,
+        "weight": 0.3
+      }
+    }
+  }
+}

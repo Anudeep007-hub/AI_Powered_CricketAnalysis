@@ -1,0 +1,26 @@
+{
+    "Footwork": {
+        "score": 4.0,
+        "feedback": "Ensure the front foot points towards the cover region."
+    },
+    "Head Position": {
+        "score": 0.4,
+        "feedback": "A stable head over the front knee is crucial for balance."
+    },
+    "Swing Control": {
+        "score": 6.9,
+        "feedback": "Elbow angle at impact was 124\u00b0. Aim for full extension."
+    },
+    "Balance": {
+        "score": 2.2,
+        "feedback": "Maintain a consistent and stable posture."
+    },
+    "Follow-through": {
+        "score": 7.5,
+        "feedback": "A high and complete follow-through ensures commitment."
+    },
+    "Benchmark Comparison": {
+        "score": 0,
+        "feedback": "Your shot matched the ideal form with a score of 0.0/10."
+    }
+}
