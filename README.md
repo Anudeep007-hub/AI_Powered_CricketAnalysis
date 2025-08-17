@@ -1,3 +1,39 @@
+## Setup & Run Instructions
+
+###  Prerequisites
+
+* [Anaconda](https://www.anaconda.com/) or Miniconda (recommended), or Python >=3.8+ and <=3.10
+* Git
+
+### Installation
+
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd <your-repo-directory>
+
+# Create conda environment
+conda create -n mp-env python=3.10 -y
+conda activate mp-env
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### ▶ Run the Application
+
+```bash
+streamlit run app.py
+```
+
+The browser will open a new tab with the application running.
+
+---
+
+
+
+
+
 # AI-Powered Cricket Cover Drive Analysis
 
 This project is a Python-based system to analyze the biomechanics of a cricket cover drive from a video. It uses **pose estimation, mathematical metrics, and scoring formulas** to provide detailed feedback on a player’s technique.
@@ -77,39 +113,9 @@ The scoring system is built around simple, logical formulas tied to batting prin
 
 ---
 
-## 4. Setup & Run Instructions
 
-###  Prerequisites
 
-* [Anaconda](https://www.anaconda.com/) or Miniconda (recommended), or Python 3.8+
-* Git
-
-### Installation
-
-```bash
-# Clone the repository
-git clone <your-repo-url>
-cd <your-repo-directory>
-
-# Create conda environment
-conda create -n mp-env python=3.10 -y
-conda activate mp-env
-
-# Install dependencies
-pip install -r requirements.txt
-```
-
-### ▶ Run the Application
-
-```bash
-streamlit run app.py
-```
-
-The browser will open a new tab with the application running.
-
----
-
-## 5. Notes on Assumptions & Limitations
+## 4. Notes on Assumptions & Limitations
 
 * **Player Handedness:** Currently optimized for **right-handed batsmen**. Left-hand analysis requires inverted logic.
 * **Camera Angle:** Works best with a **side-on stable view**.
