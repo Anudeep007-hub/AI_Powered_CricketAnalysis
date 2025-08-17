@@ -1,0 +1,7 @@
+# This file tells Streamlit Cloud which system-level packages to install.
+# We are specifying a specific Python version that is compatible with mediapipe.
+python-version=3.10
+
+# System-level dependencies required for OpenCV to run correctly.
+libgl1-mesa-glx
+libglib2.0-0
