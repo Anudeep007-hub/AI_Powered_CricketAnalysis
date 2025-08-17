@@ -1,3 +1,5 @@
+### Deployed app url: https://aipoweredcricketanalysis-cla48xjnajzrqc6qceyn3j.streamlit.app/
+
 ## Setup & Run Instructions
 
 ###  Prerequisites
